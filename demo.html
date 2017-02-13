@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>三级联动</title>
+<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+</head>
+
+<body>
+    <select id="pre" name="pptyProvince" onchange="chg1(this);">
+            <option value="-1">请选择自有房所在省</option>
+        </select>
+<select id="city" name="pptyCity" onchange="chg2(this)" ;><option value="-1">请选择自有房所在城市</option></select>
+<select id="area" name="pptyArea"><option value="-1">请选择自有房所在区</option></select>
+
+</body>
+</html>
+<script src="db.js"></script>
+<script>
+	
+/////////////////////////////////////////////////////////////////////城市
+        //设置一个省的公共下标
+        var pIndex = -1;
+        var preEle = document.getElementById("pre");
+        var cityEle = document.getElementById("city");
+        var areaEle = document.getElementById("area");
+		
+		
+		
+         //先设置省的值
+        for (var i = 0; i < pres.length; i++) {
+            //声明option.<option value="pres[i]">Pres[i]</option>
+            var op = new Option(pres[i], i);
+            //添加
+            preEle.options.add(op);
+        }
+        function chg(obj) {
+            if (obj.value == -1) {
+                cityEle.options.length = 0;
+                areaEle.options.length = 0;
+            }
+            //获取值
+            var val = obj.value;
+            pIndex = obj.value;
+            //获取ctiry
+            var cs = cities[val];
+            //获取默认区
+            var as = areas[val][0];
+            //先清空市
+            cityEle.options.length = 0;
+            areaEle.options.length = 0;
+            for (var i = 0; i < cs.length; i++) {
+                var op = new Option(cs[i], i);
+                cityEle.options.add(op);
+            }
+            for (var i = 0; i < as.length; i++) {
+                var op = new Option(as[i], i);
+                areaEle.options.add(op);
+            }
+        }
+        function chg2(obj) {
+            var val = obj.selectedIndex;
+            var as = areas[pIndex][val];
+            areaEle.options.length = 0;
+            for (var i = 0; i < as.length; i++) {
+                var op = new Option(as[i], i);
+                areaEle.options.add(op);
+            }
+        }
+		//
+		function chg1(obj) {
+            if (obj.value == -1) {
+                cityEle.options.length = 0;
+                areaEle.options.length = 0;
+            }
+            //获取值
+            var val = obj.value;
+            pIndex = obj.value;
+            //获取ctiry
+            var cs = cities[val];
+            //获取默认区
+            var as = areas[val][0];
+            //先清空市
+            cityEle.options.length = 0;
+            areaEle.options.length = 0;
+            for (var i = 0; i < cs.length; i++) {
+                var op = new Option(cs[i], i);
+                cityEle.options.add(op);
+            }
+            for (var i = 0; i < as.length; i++) {
+                var op = new Option(as[i], i);
+                areaEle.options.add(op);
+            }
+        }
+</script>
